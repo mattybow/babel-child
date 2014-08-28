@@ -1,0 +1,59 @@
+$icon-font-path: "bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+
+// bower:scss
+@import 'public/bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap.scss';
+// endbower
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.slideFull{
+	height:700px;
+	overflow-x:hidden;
+}
+#slide1{
+	background-image:url('/images/turrisBabel.jpg');
+	background-position: 50% 0px;
+	background-repeat:no-repeat;
+	height:100%;
+	width:100%;
+	background-size:cover;
+}
+.titleBar{
+	padding-left:50px;
+	width: 100%;
+	background-color: rgba(0,0,0,.1);
+	margin-top:50px;
+	position:absolute;
+}
+.intro{
+	color:#fff;
+}
+#appNameInput{
+	padding-top: 250px;
+	margin: 0 20%;
+	position:relative;
+}
+#appNameInput input{
+	font-size:20px;
+	border:none;
+	background-color: rgba(255,255,255,.6);
+	color: #537DAA;
+}
+.chat button{
+	margin-left: 50%;
+	margin-right: 50%;
+	margin-top: 10px;
+}
+.nakedButton.klear{
+	position:absolute;
+	right:10px;
+	font-size:46px;
+	font-family: 'Lato', sans-serif;
+	bottom: -9px;
+	transform: rotate(45deg);
+}
