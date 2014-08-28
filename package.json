@@ -12,6 +12,7 @@
     "consolidate": "~0.9.1",
     "cookie-parser": "~1.0.1",
     "debug": "~0.7.4",
+    "errorhandler": "^1.1.1",
     "express": "~4.2.0",
     "express-writer": "0.0.4",
     "handlebars": "1.1.2",
@@ -22,7 +23,6 @@
     "static-favicon": "~1.0.0"
   },
   "devDependencies": {
-    "errorhandler": "^1.1.1",
     "grunt": "~0.4.1",
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "~0.5.0",
