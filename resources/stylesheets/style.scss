@@ -1,59 +1,307 @@
 $icon-font-path: "bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+$fa-font-path: "../bower_components/fontawesome/fonts";
 
 // bower:scss
 @import 'public/bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap.scss';
+@import 'public/bower_components/fontawesome/scss/font-awesome.scss';
 // endbower
 
-body {
+html, body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  height:100%;
+  position:relative;
+  color:#505050;
+  background-color: #F9F9F9;
+  overflow:hidden;
 }
-
-a {
-  color: #00B7FF;
-}
-.slideFull{
-	height:700px;
-	overflow-x:hidden;
-}
-#slide1{
-	background-image:url('/images/turrisBabel.jpg');
-	background-position: 50% 0px;
-	background-repeat:no-repeat;
+.app, .chatstream{
 	height:100%;
-	width:100%;
-	background-size:cover;
-}
-.titleBar{
-	padding-left:50px;
-	width: 100%;
-	background-color: rgba(0,0,0,.1);
-	margin-top:50px;
-	position:absolute;
-}
-.intro{
-	color:#fff;
-}
-#appNameInput{
-	padding-top: 250px;
-	margin: 0 20%;
+	margin-left:0px;
+	margin-right:0px;
 	position:relative;
+	right:0px;
 }
-#appNameInput input{
-	font-size:20px;
-	border:none;
-	background-color: rgba(255,255,255,.6);
-	color: #537DAA;
+.chatstream{
+	position:relative;
+	padding:0px;
 }
-.chat button{
-	margin-left: 50%;
-	margin-right: 50%;
-	margin-top: 10px;
+textarea{
+	width:100%
 }
-.nakedButton.klear{
+.wrapper{
+	padding-left:20px;
+}
+#titleBar{
+	padding:15px 20px;
+	position:absolute;
+	width:100%;
+	z-index:100;
+	-webkit-box-shadow: 0 1px 9px -2px rgba(0,0,0,.26);
+	-moz-box-shadow: 0 1px 9px -2px rgba(0,0,0,.26);
+	box-shadow: 0 1px 9px -2px rgba(0,0,0,.26);
+	background-color: rgba(255,255,255,.7);
+}
+#titleBar h3{
+	display:inline-block;
+	padding-left:10px;
+	margin:0px;
+}
+#titleBar > *{
+	display:inline-block;
+	vertical-align:middle;
+}
+.userWrapper{
 	position:absolute;
 	right:10px;
-	font-size:46px;
+	top:5px;
+}
+.userWrapper:hover{
+	cursor:pointer;
+}
+.userWrapper:hover #userCount{
+	opacity:1;
+}
+#connectedUsers{
+	display:relative;
+}
+#userCount{
+	position: absolute;
+	width: 30px;
+	right: 7px;
+	top: 13px;
+	font-size: 15px;
+	text-align: center;
+	opacity: .4;
+}
+.taWrapper{
+	height:37px;
+	position:absolute;
+	bottom:0px;
+	width:100%;
+	border-top: 1px solid rgba(0,0,0,.2);
+}
+textarea{
+	border:none;
+	background-color:rgba(0,0,0,0);
+	padding-left:25px;
+	padding-right:100px;
+	outline:none;
+	resize:none;
+}
+.messages{
+	position: absolute;
+	width: 100%;
+	top: 0px;
+	bottom: 42px;
+	overflow:auto;
+}
+.messages > ul{
+	list-style:none;
+	padding-left:0px;
+	margin-top: 70px;
+}
+.messages li{
+	padding: 0px 20px;
+}
+.organ button{
+	background-color:rgba(185, 154, 31, 0.3);
+}
+.parti1 button{
+	background-color:rgba(0,30,120,0.3);
+}
+.btn-circle{
+	border-radius: 20px;
+	padding: 9px 10px;
+	margin-right: 10px;
+	width:41px;
+	vertical-align: top;
+	margin-top: 10px;
+}
+.userControl{
+	color:#505050;
+	margin-right:10px;
+	font-size:1.5em;
+}
+.dayStamp{
+	position:relative;
+}
+.dayText{
+	position: absolute;
+	top: -8px;
+	background-color: #F9F9F9;
+	margin-left: 50%;
+	width: 120px;
+	left: -60px;
+	text-align:center;
+}
+.message > *{
+	display:inline-block;
+}
+.dividerWrapper{
+	padding-top:20px;
+	padding-bottom: 20px;
+	width: 90%;
+	border-top: 1px solid #eee;
+	position:relative;
+	right:-300px;
+	opacity:0;
+}
+.dividerWrapper > * {
+	display:inline-block;
+}
+.timeStamp{
+	color:#9B9B9B;
+}
+.messageContent{
+	width:85%;
+}
+.messageContent p:last-child{
+	margin-bottom:0px
+}
+.taWrapper i{
+	top:8px;
+	position: absolute;
+	font-size: 20px;
+}
+#inputCheck{
+	color:rgb(67, 207, 146);
+	opacity:0;
+	left:45px;
+}
+#textareaAngle{
+	left: 10px;
+}
+#chatSubmit{
+	right: 20px;
+}
+#chatSubmit:hover{
+	cursor:pointer;
+	color:rgb(0, 30, 120);
+}
+#chatbox{
+	padding-top:10px;
+	padding-bottom:10px;
+}
+#feedbackOnInput{
+	position:absolute;
+	right:15px;
+	top:10px;
+	font-size:24px;
+	padding:0px 10px;
+}
+.modal-body .form-control{
+	background-color:rgba(0,0,0,0);
+	border:none;
+	border-bottom:2px solid #7C4BB6;
+	border-radius:0px;
+	box-shadow: 0 0 0 0;
+}
+.curtain{
+	position:absolute;
+	top:0px;
+	right:0px;
+	left:0px;
+	bottom:37px;
+	background-color:rgba(0,0,0,.5);
+	z-index:1000;
+}
+.userMgmt{
+	position:absolute;
+	top:0px;
+	width:200px;
+	color:#fff;
+	height:100%;
+	background-color:rgba(0,0,0,.3);
+	right:-200px;
+}
+.userMgmt > ul{
+	list-style:none;
+	padding-left:0px;
+	margin-top: 20px;
+}
+.userMgmt>ul>li:first-child{
+	border-top: 1px solid rgba(255,255,255,.3);
+}
+.userMgmt>ul>li{
+	padding: 10px 10px;
+	border-bottom: 1px solid rgba(255,255,255,.3);
+	position:relative;
+}
+.userMgmt>ul>li:hover{
+	background-color: rgba(0,0,0,.2);
+	cursor:pointer;
+}
+.userMarker{
+	width:3px;
+	height:100%;
+	background-color:rgba(0,0,0,.1);
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+.removeIcon{
+	position: absolute;
+	right: 10px;
+	font-size: 40px;
 	font-family: 'Lato', sans-serif;
-	bottom: -9px;
-	transform: rotate(45deg);
+	bottom: -4px;
+	-webkit-transform: rotate(45deg);
+	-moz-transform:    rotate(45deg);
+	-ms-transform:     rotate(45deg);
+	-o-transform:      rotate(45deg);
+	transform:         rotate(45deg);
+	color: #FFFFFF;
+}
+$screen-phonei4: 320px !default;
+@media (min-width: $screen-phonei4) and (max-width: $screen-phone){
+	.messageContent{
+		width:70%;
+	}
+	.dividerWrapper{
+		width:82%
+	}
+	#titleBar{
+		padding:10px 15px;
+	}
+	#connectedUsers{
+		height:35px !important;
+		width:35px !important;
+	}
+	#userCount{
+		font-size: 13px;
+		top: 9px;
+		right: 8px;
+		width: 20px;
+	}
+	.messages >ul{
+		margin-top:60px;
+	}
+}
+
+@media (max-width: $screen-phonei4){
+	.messageContent{
+		width:75%;
+	}
+	.dividerWrapper{
+		width:79%
+	}
+	.messages li{
+		padding: 0px 10px;
+	}
+	#titleBar{
+		padding:10px 15px;
+	}
+	#connectedUsers{
+		height:35px !important;
+		width:35px !important;
+	}
+	#userCount{
+		font-size: 13px;
+		top: 9px;
+		right: 8px;
+		width: 20px;
+	}
+	.messages >ul{
+		margin-top:60px;
+	}
 }

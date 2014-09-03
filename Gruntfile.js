@@ -128,7 +128,8 @@ module.exports = function (grunt) {
           ignoredFiles: ['node_modules/**'],
           watchedFolders: ['public','resources','routes','views'],
           env: {
-            PORT: '4000'
+            PORT: '4000',
+            DEBUG: 'socket.io:socket'
           }
         }
       }
