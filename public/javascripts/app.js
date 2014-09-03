@@ -112,7 +112,7 @@
 				that.setColors(data);
 			});
 			this.socket.on('user left',function(data){
-				console.log(data);
+				//console.log(data);
 				that.setColors(data);
 			});
 			this.socket.on('destroy',function(){
@@ -130,7 +130,7 @@
 			this.socket.destroy();
 		},
 		displayCurtain:function(){
-			console.log('curtain');
+			//console.log('curtain');
 			$('.curtain').css('bottom','0px');
 			$('.curtain').slideDown(200);
 			$('textarea').addClass('disabled');
@@ -157,7 +157,7 @@
 					inactiveIndex++;
 				}
 			}
-			console.log(newColors);
+			//console.log(newColors);
 			this.colorDict = newDict;
 			this.updateChart(newColors,inactiveColors);
 			this.updateCount(activeCount);
@@ -203,13 +203,13 @@
 					this.userChart = new Chart(ctx).Doughnut(data,options);
 				} else {
 					for(key in newColors){
-						console.log(key);
+						//console.log(key);
 						this.userChart.addData({value:1,color:this.colorDict[key]});
 					}
 				}
 			} else if (inactiveColors.length){
 				for(key in inactiveColors){
-					console.log(inactiveColors[key]);
+					//console.log(inactiveColors[key]);
 					this.userChart.removeData([inactiveColors[key]]);
 				}
 			}

@@ -8,6 +8,7 @@
     "fontawesome": "~4.2.0",
     "handlebars": "~1.3.0",
     "socket.io-client": "~1.0.6",
-    "chartjs": "1.0.1-beta.4"
+    "chartjs": "1.0.1-beta.4",
+    "fishbone.js": "~1.0.1"
   }
 }
