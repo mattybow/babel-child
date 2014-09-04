@@ -140,7 +140,7 @@
 		displayCurtain:function(){
 			//console.log('curtain');
 			$('.curtainMessage').html('connection terminated');
-			$('.curtain').css('bottom','0px');
+			$('.curtain').css('bottom','-1px');
 			$('.curtain').slideDown(200);
 			$('textarea').addClass('disabled');
 		},
@@ -195,6 +195,7 @@
 		terminateUser:function(ev){
 			var id = $(ev.target).closest('li').text();
 			id = id.replace(/\+$/,'');
+			console.log('terminate', id);
 			this.socket.emit('terminate user',id);
 		},
 		updateChart:function(newColors,inactiveColors){
