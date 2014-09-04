@@ -158,9 +158,18 @@ textarea{
 .messageContent p:last-child{
 	margin-bottom:0px
 }
-.taWrapper i{
+.taWrapper>i{
 	top:8px;
 	position: absolute;
+	font-size: 20px;
+}
+.taWrapper > .invisi-button{
+	position:absolute;
+	right: 0px;
+	top: 0px;
+	width: 60px;
+	height: 100%;
+	text-align: center;
 	font-size: 20px;
 }
 #inputCheck{
@@ -170,9 +179,6 @@ textarea{
 }
 #textareaAngle{
 	left: 10px;
-}
-#chatSubmit{
-	right: 20px;
 }
 #chatSubmit:hover{
 	cursor:pointer;
@@ -189,6 +195,10 @@ textarea{
 	font-size:24px;
 	padding:0px 10px;
 }
+.invisi-button{
+	border:none;
+	background:transparent;
+}
 .modal-body .form-control{
 	background-color:rgba(0,0,0,0);
 	border:none;
@@ -204,6 +214,23 @@ textarea{
 	bottom:37px;
 	background-color:rgba(0,0,0,.5);
 	z-index:1000;
+}
+.curtainMessageWrapper{
+	display: table;
+	height: 100%;
+	margin: auto;
+	text-align: center;
+}
+.curtainMessage{
+	color:white;
+	font-size:40px;
+	position:relative;
+	display:table-cell;
+	margin:auto;
+	vertical-align:middle;
+	max-width:300px;
+	text-shadow: 0px 1px 3px #929292;
+	color: #525252;
 }
 .userMgmt{
 	position:absolute;

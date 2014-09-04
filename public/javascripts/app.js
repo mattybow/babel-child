@@ -93,7 +93,7 @@
 			this.lastDate = '';
 			this.colorDict = {};
 			this.setListeners();
-			this.socket = new Socket().connect('http://localhost:4000/');
+			this.socket = new Socket().connect();
 			this.setSocketListeners();
 			this.dateTemplate = hbs.compile('<div class="dayStamp"><hr><div class="dayText">{{ dateStr }}</div></div>');
 			this.msgTemplate = hbs.compile('<li class="organ"><div class="message"><button class="btn btn-circle">{{ initials }}</button><div class="dividerWrapper"><div class="messageContent"><p>{{ message }}</p></div><div class="timeStamp pull-right">{{ time }}</div></div></div></li>');
@@ -112,7 +112,7 @@
 				that.setColors(data);
 			});
 			this.socket.on('user left',function(data){
-				//console.log(data);
+				console.log(data);
 				that.setColors(data);
 			});
 			this.socket.on('destroy',function(){
@@ -123,14 +123,17 @@
 			$('textarea').on('keydown',this.keydownHandler);
 			$('textarea').on('focusout',this.clickHandler);   //for phones
 			$('#chatSubmit').on('click',this.clickHandler);
-			$('.userWrapper').on('click',this.displayUserControls);
+			$('.userWrapper').on('click',this.toggleUserControls);
 		},
 		destroy:function(){
+			console.log('destroy message received');
 			this.displayCurtain();
+			this.hideUserControls();
 			this.socket.destroy();
 		},
 		displayCurtain:function(){
 			//console.log('curtain');
+			$('.curtainMessage').html('connection terminated');
 			$('.curtain').css('bottom','0px');
 			$('.curtain').slideDown(200);
 			$('textarea').addClass('disabled');
@@ -184,7 +187,7 @@
 			$(".user-in-list").on('click',this.terminateUser);
 		},
 		terminateUser:function(ev){
-			var id = $(ev.target).text();
+			var id = $(ev.target).closest('li').text();
 			id = id.replace(/\+$/,'');
 			this.socket.emit('terminate user',id);
 		},
@@ -293,14 +296,20 @@
 			$(".messages").animate({ scrollTop: $('.messages ul').height() }, 200);
 			if(!hash) this.socket.emit('message',context);
 		},
-		displayUserControls:function(){
+		toggleUserControls:function(){
 			if($('.row.app').css('right')==='0px'){
-				$('.row.app').animate({right:'200px'},200);
-				$('.userMgmt').animate({right:'0px'},200);
+				this.showUserControls();
 			} else {
-				$('.row.app').animate({right:'0px'},200);
-				$('.userMgmt').animate({right:'-200px'},200);
+				this.hideUserControls();
 			}
+		},
+		showUserControls:function(){
+			$('.row.app').animate({right:'200px'},200);
+			$('.userMgmt').animate({right:'0px'},200);
+		},
+		hideUserControls:function(){
+			$('.row.app').animate({right:'0px'},200);
+			$('.userMgmt').animate({right:'-200px'},200);
 		}
 
 	});
