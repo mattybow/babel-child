@@ -98,8 +98,13 @@ io.on('connection', function(socket){
   });
 
   socket.on('message',function(data){
-    console.log('CONNECTED TO:', socket.rooms);
-    socket.broadcast.emit('message',data);
+    console.log(socket.id);
+    console.log(JSON.stringify(socketList));
+    if(socket.id in socketList  && colorDict[socketList[socket.id]].status === 'active'){
+      socket.broadcast.emit('message',data);
+    } else {
+      socket.emit('destroy');
+    }
   });
 
   socket.on('terminate user',function(id){
@@ -116,7 +121,7 @@ io.on('connection', function(socket){
 });
 
 function codeColor(initial){
-  if(!(initial in colorDict) || colorDict[initial].status==='inactive'){
+  if(!(initial in colorDict)){
     var index = _.size(colorDict);
     var partition_index = (SUB_PARTITIONS/PARTITIONS)*(index % PARTITIONS);
     var subPartition_index = Math.floor(index/PARTITIONS);
@@ -126,8 +131,10 @@ function codeColor(initial){
     var A = R*Math.cos((index+2)*Math.PI/4);
     var B = R*Math.sin((index+2)*Math.PI/4);
     colorDict[initial]= {color:chroma.lab(L,A,B).alpha(0.5).css(),status:'active'};
-    console.log(JSON.stringify(colorDict));
+  } else if (colorDict[initial].status==='inactive'){
+    colorDict[initial].status = 'active';
   }
+  console.log(JSON.stringify(colorDict));
 }
 
 function isUnique(initial){

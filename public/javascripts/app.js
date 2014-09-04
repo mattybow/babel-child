@@ -296,7 +296,8 @@
 			$(".messages").animate({ scrollTop: $('.messages ul').height() }, 200);
 			if(!hash) this.socket.emit('message',context);
 		},
-		toggleUserControls:function(){
+		toggleUserControls:function(ev){
+			ev.stopPropagation();
 			if($('.row.app').css('right')==='0px'){
 				this.showUserControls();
 			} else {
@@ -306,10 +307,13 @@
 		showUserControls:function(){
 			$('.row.app').animate({right:'200px'},200);
 			$('.userMgmt').animate({right:'0px'},200);
+			$('.row.app').on('click',this.hideUserControls);
 		},
-		hideUserControls:function(){
+		hideUserControls:function(ev){
+			if(ev) ev.stopPropagation();
 			$('.row.app').animate({right:'0px'},200);
 			$('.userMgmt').animate({right:'-200px'},200);
+			$('.row.app').off('click',this.hideUserControls);
 		}
 
 	});
