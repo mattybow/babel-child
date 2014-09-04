@@ -6250,7 +6250,7 @@ textarea {
   border: none;
   background-color: rgba(0, 0, 0, 0);
   padding-left: 25px;
-  padding-right: 100px;
+  padding-right: 60px;
   outline: none;
   resize: none; }
 
@@ -6353,6 +6353,13 @@ textarea {
 #chatbox {
   padding-top: 10px;
   padding-bottom: 10px; }
+
+#editor {
+  padding: 10px 60px 10px 25px;
+  height: 37px; }
+
+#editor:focus {
+  outline: none; }
 
 #feedbackOnInput {
   position: absolute;

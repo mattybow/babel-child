@@ -73,6 +73,7 @@
 			if ($('textarea').val()){
 				this.hideCheck();
 				this.removeCurtain();
+				$('textarea').addClass("hidden");
 			}
 		},
 		removeCurtain:function(){
@@ -95,6 +96,7 @@
 			this.setListeners();
 			this.socket = new Socket().connect();
 			this.setSocketListeners();
+			this.makeQuill();
 			this.dateTemplate = hbs.compile('<div class="dayStamp"><hr><div class="dayText">{{ dateStr }}</div></div>');
 			this.msgTemplate = hbs.compile('<li class="organ"><div class="message"><button class="btn btn-circle">{{ initials }}</button><div class="dividerWrapper"><div class="messageContent"><p>{{ message }}</p></div><div class="timeStamp pull-right">{{ time }}</div></div></div></li>');
 			this.userTemplate = hbs.compile('<li class="user-in-list">{{ initials }}<span class="removeIcon">+</span><div class="userMarker" style="background-color:{{ color }}"></div></li>');
@@ -118,6 +120,10 @@
 			this.socket.on('destroy',function(){
 				that.destroy();
 			});
+		},
+		makeQuill:function(){
+			$("#editor").attr('contenteditable','true').focus();
+			$('#editor').on('keydown',this.keydownHandler);
 		},
 		setListeners:function(){
 			$('textarea').on('keydown',this.keydownHandler);
@@ -218,7 +224,7 @@
 			}
 		},
 		keydownHandler:function(ev){
-			if(ev.which===13){
+			if(ev.which===13 && !ev.shiftKey){
 				ev.preventDefault();
 				this.textHandler();
 			}
@@ -227,10 +233,10 @@
 			this.textHandler();
 		},
 		textHandler:function(){
-			var text = this.getText();
+			var text = $('#editor').html();
 			if (text){
 				this.commitChat(text);
-				$('textarea').val('');
+				$('#editor').html('');
 			}
 		},
 		getTime:function(){
@@ -266,10 +272,10 @@
 			}
 		},
 		appendToDom:function(html){
-			$('.messages ul').append(html);
+			$('.chatstream>.messages>ul').append(html);
 		},
 		insertIntoDom:function(message){
-			$('.messages ul li:last-child .messageContent').append(message);
+			$('.chatstream>.messages>ul>li:last-child>.message>.dividerWrapper>.messageContent').append(message);
 		},
 		isSameUser:function(context){
 			if(this.lastMessage){
@@ -281,8 +287,10 @@
 			var context;
 			if(hash){
 				context = hash;
+				context.message = new hbs.SafeString(hash.message.string);
 			} else {
-				context = {initials:this.initials,message:content,time:this.getTime()};
+				var safeString = new hbs.SafeString(content);
+				context = {initials:this.initials,message:safeString,time:this.getTime()};
 			}
 			this.checkDate();																//adds a new date header to the flow if it is different day
 			if(this.isSameUser(context)){
@@ -291,7 +299,7 @@
 				this.appendToDom(this.msgTemplate(context));
 				this.lastMessage = context;													//store the last message we displayed
 			}
-			$('.messages ul li:last-child button').css('background-color',this.colorDict[context.initials]);
+			$('.chatstream>.messages>ul>li:last-child>.message>button').css('background-color',this.colorDict[context.initials]);
 			$(".messages ul li:last-child .dividerWrapper").animate({right:'0px',opacity:1},200);
 			$(".messages").animate({ scrollTop: $('.messages ul').height() }, 200);
 			if(!hash) this.socket.emit('message',context);
