@@ -41,19 +41,25 @@
 		},
 		keyupHandler:function(ev){
 			var text = this.getText();
+			var key = ev.which;
 			if(text.length===0){
 				this.hideCheck();
-			} else if (text.length>0) {
+			} else if (text.length>0 && key!==13) {
 				this.validate(text);
 			}
 		},
 		validate:function(text){
+			this.valid = false;
 			$.ajax({
 				url:"/validate/"+text,
 				context:this
 			}).done(function(data){
 				if(data.status==='ok' && this.getText().length){
 					this.showCheck();
+					this.valid = true;
+				} else {
+					this.hideCheck();
+					this.valid = false;
 				}
 			});
 		},
@@ -71,7 +77,7 @@
 		},
 		checkInput:function(){
 			this.initials = this.getText();
-			if ($('textarea').val()){
+			if ($('textarea').val() && this.valid){
 				this.hideCheck();
 				this.removeCurtain();
 				$('textarea').addClass("hidden");
