@@ -8,6 +8,7 @@
 			return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 		},
 		getText:function(){
+			//alert('asdasfd');
 			var text = $('textarea').val();
 			if(text) text = this.trimSpaces(text);
 			return text;
@@ -100,6 +101,7 @@
 			this.dateTemplate = hbs.compile('<div class="dayStamp"><hr><div class="dayText">{{ dateStr }}</div></div>');
 			this.msgTemplate = hbs.compile('<li class="organ"><div class="message"><button class="btn btn-circle">{{ initials }}</button><div class="dividerWrapper"><div class="messageContent"><p>{{ message }}</p></div><div class="timeStamp pull-right">{{ time }}</div></div></div></li>');
 			this.userTemplate = hbs.compile('<li class="user-in-list">{{ initials }}<span class="removeIcon">+</span><div class="userMarker" style="background-color:{{ color }}"></div></li>');
+			if(("Notification" in window) && (window.Notification.permission === 'default')) this.setPermission();
 		},
 		setSocketListeners:function(){
 			var that = this;
@@ -125,11 +127,65 @@
 			$("#editor").attr('contenteditable','true').focus();
 			$('#editor').on('keydown',this.keydownHandler);
 		},
+		setPermission:function(){
+			window.Notification.requestPermission(function(status){
+				if (window.Notification.permission !== status) {
+					window.Notification.permission = status;
+					//update UI
+				}
+			});
+		},
 		setListeners:function(){
 			$('textarea').on('keydown',this.keydownHandler);
 			$('textarea').on('focusout',this.clickHandler);   //for phones
 			$('#chatSubmit').on('click',this.clickHandler);
 			$('.userWrapper').on('click',this.toggleUserControls);
+			window.onblur = this.setNotifier.bind(this);
+			window.onfocus = this.removeNotifier.bind(this);
+		},
+		setNotifier:function(){
+			var that = this;
+			this.missedCount = 0;
+			this.socket.on('message',this.incMissedCount);
+		},
+		removeNotifier:function(){
+			var that = this;
+			this.socket.removeListener('message',this.incMissedCount);
+		},
+		incMissedCount:function(){
+			this.missedCount++;
+			if(this.missedCount===1){
+				this.notifyUser();
+			}
+		},
+		notifyUser:function(){
+			if(window.Notification.permission==='granted'){
+				var that = this;
+				var options = {body:"you have new messages",icon:'/images/CHAT.png'};
+				this.sendNotification('yo yo yo',options);
+			}
+		},
+		sendNotification:function(title, options) {
+			// notification.js from nickdesaulniers
+			var sendNote, notification;
+			if ("Notification" in window) {
+				sendNote = function (title, options) {
+					notification = new Notification(title, options);
+					setTimeout(function(){notification.close();},6000);
+				};
+			} else if ("mozNotification" in navigator) {
+				sendNote = function (title, options) {
+			// Gecko < 22
+					notification = navigator.mozNotification.createNotification(title, options.body, options.icon);
+					notification.show();
+					setTimeout(function(){notification.close();},6000);
+				};
+			} else {
+				sendNote = function (title, options) {
+					alert(title + ": " + options.body);
+				};
+			}
+			sendNote(title, options);
 		},
 		destroy:function(){
 			console.log('destroy message received');
