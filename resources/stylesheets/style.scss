@@ -116,6 +116,16 @@ textarea{
 	width:41px;
 	vertical-align: top;
 	margin-top: 10px;
+	position:relative
+}
+.btn-circle>div{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	vertical-align: middle;
+	padding-top:9px;
+	top: 0px;
+	left: 0px;
 }
 .userControl{
 	color:#505050;

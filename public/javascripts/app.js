@@ -105,7 +105,7 @@
 			this.setSocketListeners();
 			this.makeQuill();
 			this.dateTemplate = hbs.compile('<div class="dayStamp"><hr><div class="dayText">{{ dateStr }}</div></div>');
-			this.msgTemplate = hbs.compile('<li class="organ"><div class="message"><button class="btn btn-circle">{{ initials }}</button><div class="dividerWrapper"><div class="messageContent"><p>{{ message }}</p></div><div class="timeStamp pull-right">{{ time }}</div></div></div></li>');
+			this.msgTemplate = hbs.compile('<li class="organ"><div class="message"><button class="btn btn-circle">&nbsp;<div>{{ initials }}</div></button><div class="dividerWrapper"><div class="messageContent"><p>{{ message }}</p></div><div class="timeStamp pull-right">{{ time }}</div></div></div></li>');
 			this.userTemplate = hbs.compile('<li class="user-in-list">{{ initials }}<span class="removeIcon">+</span><div class="userMarker" style="background-color:{{ color }}"></div></li>');
 			if(("Notification" in window) && (window.Notification.permission === 'default')) this.setPermission();
 		},
