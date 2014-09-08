@@ -107,6 +107,10 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on('typing',function(initials){
+    socket.broadcast.emit('typing',initials);
+  });
+
   socket.on('terminate user',function(id){
     var rm = findSocketName(id);
     var sock = io.sockets.connected[rm];

@@ -1,9 +1,5 @@
 (function($,FishboneModel,hbs,Socket,Chart){
 	var Worker = FishboneModel({
-		kills:100,
-		getKills:function(){
-			return this.kills;
-		},
 		trimSpaces:function(str) {
 			return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 		},
@@ -128,6 +124,9 @@
 			this.socket.on('destroy',function(){
 				that.destroy();
 			});
+			this.socket.on('typing',function(data){
+				that.displayTyping(data);
+			});
 		},
 		makeQuill:function(){
 			$("#editor").attr('contenteditable','true').focus();
@@ -146,6 +145,7 @@
 			$('textarea').on('focusout',this.clickHandler);   //for phones
 			$('#chatSubmit').on('click',this.clickHandler);
 			$('.userWrapper').on('click',this.toggleUserControls);
+			$('.lines-button').on('click',this.toggleMenuOptions);
 			window.onblur = this.setNotifier.bind(this);
 			window.onfocus = this.removeNotifier.bind(this);
 		},
@@ -158,10 +158,29 @@
 			var that = this;
 			this.socket.removeListener('message',this.incMissedCount);
 		},
+		setBlinker:function(){
+			var oldTitle = document.title;
+			var msg = "new messages";
+			var timeoutId;
+			var blink = function() { document.title = document.title === msg ? ' ' : msg; };
+			var clear = function() {
+				clearInterval(timeoutId);
+				document.title = oldTitle;
+				window.onmousemove = null;
+				timeoutId = null;
+			};
+			return function() {
+				if (!timeoutId) {
+					timeoutId = setInterval(blink, 1000);
+					window.onmousemove = clear;
+				}
+			};
+		},
 		incMissedCount:function(){
 			this.missedCount++;
 			if(this.missedCount===1){
 				this.notifyUser();
+				this.setBlinker()();
 			}
 		},
 		notifyUser:function(){
@@ -286,10 +305,21 @@
 				}
 			}
 		},
+		displayTyping:function(initials){
+			console.log(initials + 'typing');
+			$('#typingStatus span').html(initials);
+			$('#typingStatus').animate({bottom:'37px'},200);
+			setTimeout(function(){$('#typingStatus').animate({bottom:'0px'},200);},5000);
+		},
 		keydownHandler:function(ev){
+			var that = this;
 			if(ev.which===13 && !ev.shiftKey){
 				ev.preventDefault();
 				this.textHandler();
+			} else if(!this.typingStatus){
+				this.socket.emit('typing',this.initials);
+				this.typingStatus=true;
+				setTimeout(function(){that.typingStatus = false;},5000);
 			}
 		},
 		clickHandler:function(){
@@ -368,12 +398,32 @@
 			if(!hash) this.socket.emit('message',context);
 		},
 		toggleUserControls:function(ev){
-			ev.stopPropagation();
+			if (ev) ev.stopPropagation();
 			if($('.row.app').css('right')==='0px'){
 				this.showUserControls();
 			} else {
 				this.hideUserControls();
 			}
+		},
+		toggleMenuOptions:function(ev){
+			if (ev) ev.stopPropagation();
+			if($('.row.app').css('right')==='0px'){
+				this.showMenu();
+			} else {
+				this.hideMenu();
+			}
+		},
+		showMenu:function(){
+			$('.lines-button').addClass('closeTxfm');
+			$('.row.app').animate({right:'-200px'},200);
+			$('.menuOptions').animate({left:'0px'},200);
+			$('.row.app').on('click',this.hideMenu);
+		},
+		hideMenu:function(){
+			$('.lines-button').removeClass('closeTxfm');
+			$('.row.app').animate({right:'0px'},200);
+			$('.menuOptions').animate({left:'-200px'},200);
+			$('.row.app').off('click',this.hideMenu);
 		},
 		showUserControls:function(){
 			$('.row.app').animate({right:'200px'},200);

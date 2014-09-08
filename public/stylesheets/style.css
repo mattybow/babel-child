@@ -6244,7 +6244,8 @@ textarea {
   position: absolute;
   bottom: 0px;
   width: 100%;
-  border-top: 1px solid rgba(0, 0, 0, 0.2); }
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #F9F9F9; }
 
 textarea {
   border: none;
@@ -6258,7 +6259,7 @@ textarea {
   position: absolute;
   width: 100%;
   top: 0px;
-  bottom: 42px;
+  bottom: 37px;
   overflow: auto; }
 
 .messages > ul {
@@ -6415,31 +6416,37 @@ textarea {
   text-shadow: 0px 1px 3px #929292;
   color: #525252; }
 
-.userMgmt {
+.userCtrls {
   position: absolute;
   top: 0px;
   width: 200px;
   color: #fff;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  right: -200px; }
+  background-color: rgba(0, 0, 0, 0.3); }
 
-.userMgmt > ul {
+.userCtrls > ul {
   list-style: none;
   padding-left: 0px;
   margin-top: 20px; }
 
-.userMgmt > ul > li:first-child {
-  border-top: 1px solid rgba(255, 255, 255, 0.3); }
-
-.userMgmt > ul > li {
+.userCtrls > ul > li {
   padding: 10px 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   position: relative; }
+  .userCtrls > ul > li:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.3); }
+  .userCtrls > ul > li::hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer; }
 
-.userMgmt > ul > li:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-  cursor: pointer; }
+.userMgmt {
+  right: -200px; }
+
+.menuOptions {
+  left: -200px; }
+
+.menuOptions h4 {
+  margin-left: 10px; }
 
 .userMarker {
   width: 3px;
@@ -6461,6 +6468,93 @@ textarea {
   -o-transform: rotate(45deg);
   transform: rotate(45deg);
   color: #FFFFFF; }
+
+#typingStatus {
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  height: 26px;
+  bottom: 0px;
+  width: 100%;
+  padding: 5px 10px; }
+
+.babelMenu {
+  position: absolute;
+  top: 0px;
+  width: 200px;
+  color: #fff;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); }
+
+.lines-button {
+  display: inline-block;
+  padding: 0px;
+  -webkit-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 0.2857142857rem;
+  background: transparent;
+  border: 0px;
+  padding-bottom: 5px; }
+  .lines-button:hover {
+    opacity: 1; }
+  .lines-button:focus {
+    outline: none; }
+  .lines-button:active {
+    transition: 0;
+    outline: none; }
+
+.lines {
+  display: inline-block;
+  width: 1.6rem;
+  height: 0.2857142857rem;
+  background: #555;
+  -webkit-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  position: relative;
+  /*create the upper and lower lines as pseudo-elements of the middle line*/ }
+  .lines:before, .lines:after {
+    display: inline-block;
+    width: 1.6rem;
+    height: 0.2857142857rem;
+    background: #555;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    position: absolute;
+    left: 0;
+    content: '';
+    transform-origin: 0.1428571429rem center; }
+  .lines:before {
+    top: 0.5rem; }
+  .lines:after {
+    top: -0.5rem; }
+
+.lines-button.x.closeTxfm .lines {
+  /*hide the middle line*/
+  background: transparent;
+  /*overlay the lines by setting both their top values to 0*/ }
+  .lines-button.x.closeTxfm .lines:before, .lines-button.x.closeTxfm .lines:after {
+    transform-origin: 50% 50%;
+    top: 0;
+    width: 2rem; }
+  .lines-button.x.closeTxfm .lines:before {
+    -webkit-transform: rotate3d(0, 0, 1, 45deg);
+    -moz-transform: rotate3d(0, 0, 1, 45deg);
+    -ms-transform: rotate3d(0, 0, 1, 45deg);
+    -o-transform: rotate3d(0, 0, 1, 45deg);
+    transform: rotate3d(0, 0, 1, 45deg); }
+  .lines-button.x.closeTxfm .lines:after {
+    -webkit-transform: rotate3d(0, 0, 1, -45deg);
+    -moz-transform: rotate3d(0, 0, 1, -45deg);
+    -ms-transform: rotate3d(0, 0, 1, -45deg);
+    -o-transform: rotate3d(0, 0, 1, -45deg);
+    transform: rotate3d(0, 0, 1, -45deg); }
 
 @media (min-width: 320px) and (max-width: 480px) {
   .messageContent {

@@ -79,6 +79,7 @@ textarea{
 	bottom:0px;
 	width:100%;
 	border-top: 1px solid rgba(0,0,0,.2);
+	background-color:#F9F9F9;
 }
 textarea{
 	border:none;
@@ -92,7 +93,7 @@ textarea{
 	position: absolute;
 	width: 100%;
 	top: 0px;
-	bottom: 42px;
+	bottom: 37px;
 	overflow:auto;
 }
 .messages > ul{
@@ -249,32 +250,46 @@ textarea{
 	text-shadow: 0px 1px 3px #929292;
 	color: #525252;
 }
-.userMgmt{
+@mixin offscreenMenu{
 	position:absolute;
 	top:0px;
 	width:200px;
 	color:#fff;
 	height:100%;
 	background-color:rgba(0,0,0,.3);
-	right:-200px;
 }
-.userMgmt > ul{
+.userCtrls{
+	@include offscreenMenu;
+}
+.userCtrls > ul{
 	list-style:none;
 	padding-left:0px;
 	margin-top: 20px;
 }
-.userMgmt>ul>li:first-child{
-	border-top: 1px solid rgba(255,255,255,.3);
-}
-.userMgmt>ul>li{
+
+.userCtrls>ul>li{
 	padding: 10px 10px;
 	border-bottom: 1px solid rgba(255,255,255,.3);
 	position:relative;
+
+	&:first-child{
+		border-top: 1px solid rgba(255,255,255,.3);
+	}
+	&::hover{
+		background-color: rgba(0,0,0,.2);
+		cursor:pointer;
+	}
 }
-.userMgmt>ul>li:hover{
-	background-color: rgba(0,0,0,.2);
-	cursor:pointer;
+.userMgmt{
+	right:-200px;
 }
+.menuOptions{
+	left:-200px;
+}
+.menuOptions h4{
+	margin-left:10px;
+}
+
 .userMarker{
 	width:3px;
 	height:100%;
@@ -296,6 +311,110 @@ textarea{
 	transform:         rotate(45deg);
 	color: #FFFFFF;
 }
+#typingStatus{
+	background-color:rgba(0,0,0,.1);
+	position:absolute;
+	height:26px;
+	bottom:0px;
+	width:100%;
+	padding: 5px 10px;
+}
+.babelMenu{
+	@include offscreenMenu;
+}
+
+$button-size : 2.0rem; 
+$transition: .3s; // increase this to see the transformations in slow-motion
+
+@mixin transition($transition){
+	-webkit-transition: all $transition ease-out;
+	-o-transition: all $transition ease-out;
+	-moz-transition: all $transition ease-out;
+	transition: all $transition ease-out;
+}
+
+@mixin line {
+  display: inline-block;
+  width: $button-size*.8;
+  height: $button-size/7;
+  background: #555;
+  @include transition($transition);
+}
+
+@mixin transformX($prop){
+  -webkit-transform: $prop;
+  -moz-transform:    $prop;
+  -ms-transform:     $prop;
+  -o-transform:      $prop;
+  transform:         $prop;
+}
+ 
+.lines-button {
+  display: inline-block;
+  padding: 0px;
+  @include transition($transition);
+  cursor: pointer;
+  user-select: none;
+  border-radius: $button-size/7;
+  background:transparent;
+  border: 0px;
+  padding-bottom: 5px;
+ 
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus{
+  	outline:none;
+  }
+ 
+  &:active {
+    transition: 0;
+    outline:none;
+  }
+}
+
+
+.lines {
+   
+  //create middle line
+  @include line;
+  position: relative; 
+ 
+  /*create the upper and lower lines as pseudo-elements of the middle line*/
+  &:before, &:after {
+   
+   @include line;
+    position: absolute;
+    left:0;
+    content: '';
+    transform-origin: $button-size/14 center;
+  }
+  &:before { top: $button-size/4; }
+  &:after { top: -$button-size/4; }
+}
+
+.lines-button.x.closeTxfm .lines{
+ 
+    /*hide the middle line*/
+    background: transparent;
+ 
+    /*overlay the lines by setting both their top values to 0*/
+    &:before, &:after{
+      transform-origin: 50% 50%;
+      top:0;
+      width: $button-size;
+    }
+ 
+    // rotate the lines to form the x shape
+    &:before{
+      @include transformX(rotate3d(0,0,1,45deg)); 
+    }
+    &:after{
+      @include transformX(rotate3d(0,0,1,-45deg)); 
+    }
+}
+
 $screen-phonei4: 320px !default;
 @media (min-width: $screen-phonei4) and (max-width: $screen-phone){
 	.messageContent{

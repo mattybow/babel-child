@@ -15,6 +15,12 @@
 		<script src="bower_components/modernizr/modernizr.js"></script>
 	</head>
 		<body>
+        <div class="userCtrls menuOptions">
+            <ul>
+                <li>notifications</li>
+                <li>about</li>
+            </ul>
+        </div>
 		<div class="row app">
             <div class="curtain">
                 <div class="curtainMessageWrapper">
@@ -28,7 +34,9 @@
             </div>
             <div class="col-sm-12 chatstream">
                 <div class="wrapper" id="titleBar">
-                    <a class="userControl"><i class="fa fa-bars"></i></a>
+                    <button type="button" role="button" aria-label="Toggle Navigation" class="lines-button x">
+                      <span class="lines"></span>
+                    </button>
                     <h3>{{title}}</h3>
                     <div class="userWrapper">
                         <canvas id="connectedUsers" width="45" height="45"></canvas>
@@ -39,6 +47,9 @@
                     <ul>
                     </ul>
                 </div>
+                <div id="typingStatus">
+                    <span></span>&nbsp; is typing
+                </div>
                 <div class="taWrapper">
                     <i class="fa fa-angle-right" id="textareaAngle"></i>
                     <textarea name="cathy" id="chatbox" maxlength="2" cols="30" rows="1" placeholder="enter initials to begin"></textarea>
@@ -48,7 +59,7 @@
                 </div>
             </div>
         </div>
-        <div class="userMgmt">
+        <div class="userCtrls userMgmt">
             <ul>
             </ul>
         </div>
