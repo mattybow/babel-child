@@ -275,7 +275,7 @@ textarea{
 	&:first-child{
 		border-top: 1px solid rgba(255,255,255,.3);
 	}
-	&::hover{
+	&:hover{
 		background-color: rgba(0,0,0,.2);
 		cursor:pointer;
 	}

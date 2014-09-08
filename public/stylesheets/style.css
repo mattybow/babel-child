@@ -6435,7 +6435,7 @@ textarea {
   position: relative; }
   .userCtrls > ul > li:first-child {
     border-top: 1px solid rgba(255, 255, 255, 0.3); }
-  .userCtrls > ul > li::hover {
+  .userCtrls > ul > li:hover {
     background-color: rgba(0, 0, 0, 0.2);
     cursor: pointer; }
 
