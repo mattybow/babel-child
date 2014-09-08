@@ -96,6 +96,7 @@
 			this.initials = initials;
 			this.lastDate = '';
 			this.colorDict = {};
+			this.typingUsers = [];
 			this.setListeners();
 			this.socket = new Socket().connect();
 			this.setSocketListeners();
@@ -306,10 +307,35 @@
 			}
 		},
 		displayTyping:function(initials){
-			console.log(initials + 'typing');
-			$('#typingStatus span').html(initials);
-			$('#typingStatus').animate({bottom:'37px'},200);
-			setTimeout(function(){$('#typingStatus').animate({bottom:'0px'},200);},5000);
+			var that = this;
+			this.typingUsers.push(initials);
+			setTimeout(function(){
+							that.typingUsers.shift();
+						},4000);
+			var typers = this.getTypingUsers();
+			console.log(typers);
+			if (typers) {
+				$('#typingStatus span').html(typers);
+				$('#typingStatus').animate({bottom:'37px'},200);
+				if(this.timeoutID) clearTimeout(this.timeoutID);
+				this.timeoutID = setTimeout(function(){
+												$('#typingStatus').animate({bottom:'0px'},200);
+												that.timeoutID='';
+											},5000);
+			}
+		},
+		getTypingUsers:function(){
+			var output='';
+			var user;
+			for(var index in this.typingUsers){
+				user = this.typingUsers[index];
+				if(output.length){
+					output = output + ', ' + user;
+				} else {
+					output = user;
+				}
+			}
+			return output;
 		},
 		keydownHandler:function(ev){
 			var that = this;
@@ -319,7 +345,7 @@
 			} else if(!this.typingStatus){
 				this.socket.emit('typing',this.initials);
 				this.typingStatus=true;
-				setTimeout(function(){that.typingStatus = false;},5000);
+				setTimeout(function(){that.typingStatus = false;},4000);
 			}
 		},
 		clickHandler:function(){
@@ -428,7 +454,7 @@
 		showUserControls:function(){
 			$('.row.app').animate({right:'200px'},200);
 			$('.userMgmt').animate({right:'0px'},200);
-			$('.row.app').on('click',this.hideUserControls);
+			$('.row.app').on('click',this.UserControls);
 		},
 		hideUserControls:function(ev){
 			if(ev) ev.stopPropagation();

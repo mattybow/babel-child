@@ -166,6 +166,9 @@ textarea{
 .messageContent{
 	width:85%;
 }
+.messageContent > p{
+	word-break: break-word;
+}
 .messageContent p:last-child{
 	margin-bottom:0px
 }
