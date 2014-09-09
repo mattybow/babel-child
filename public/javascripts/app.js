@@ -218,6 +218,7 @@
 			console.log('destroy message received');
 			this.displayCurtain();
 			this.hideUserControls();
+			this.hideMenu();
 			this.socket.destroy();
 		},
 		displayCurtain:function(){
@@ -466,7 +467,7 @@
 		showUserControls:function(){
 			$('.row.app').animate({right:'200px'},200);
 			$('.userMgmt').animate({right:'0px'},200);
-			$('.row.app').on('click',this.UserControls);
+			$('.row.app').on('click',this.hideUserControls);
 		},
 		hideUserControls:function(ev){
 			if(ev) ev.stopPropagation();
