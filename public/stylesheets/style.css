@@ -6559,6 +6559,33 @@ textarea {
     -o-transform: rotate3d(0, 0, 1, -45deg);
     transform: rotate3d(0, 0, 1, -45deg); }
 
+.hiddenText {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding-left: 10px; }
+
+.hiddenText > ul {
+  list-style: none;
+  padding-left: 10px; }
+
+.hiddenText > ul > li {
+  padding: 5px 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+
+.hiddenText > .row > * {
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.2); }
+
+.hiddenText > .row > :last-child {
+  border-right: none; }
+
+.hiddenText > .row {
+  margin-top: 5px; }
+
+.expandableLi {
+  height: 39px;
+  overflow: hidden; }
+
 @media (min-width: 320px) and (max-width: 480px) {
   .messageContent {
     width: 70%; }

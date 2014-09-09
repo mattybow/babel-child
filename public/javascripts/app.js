@@ -147,6 +147,7 @@
 			$('#chatSubmit').on('click',this.clickHandler);
 			$('.userWrapper').on('click',this.toggleUserControls);
 			$('.lines-button').on('click',this.toggleMenuOptions);
+			$('.expandableLi').on('click',this.expandLi);
 			window.onblur = this.setNotifier.bind(this);
 			window.onfocus = this.removeNotifier.bind(this);
 		},
@@ -389,6 +390,17 @@
 				this.lastDate = curDateStr;
 				this.appendToDom(this.dateTemplate({dateStr:curDateStr}));
 			}
+		},
+		expandLi:function(ev){
+			var $elem = $(ev.target).closest('li');
+			var newHeight = $elem.children('.hiddenText').height() + 39 +30;
+			$elem.animate({height:newHeight+'px'},200);
+			$elem.on('click',this.shrinkLi);
+		},
+		shrinkLi:function(ev){
+			var $elem = $(ev.target).closest('li');
+			$elem.animate({height:'39px'},200);
+			$elem.off('click',this.shrinkLi);
 		},
 		appendToDom:function(html){
 			$('.chatstream>.messages>ul').append(html);

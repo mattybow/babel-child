@@ -417,6 +417,33 @@ $transition: .3s; // increase this to see the transformations in slow-motion
       @include transformX(rotate3d(0,0,1,-45deg)); 
     }
 }
+.hiddenText{
+	margin-top:20px;
+	margin-bottom:10px;
+	padding-left:10px;
+}
+.hiddenText>ul{
+	list-style:none;
+	padding-left:10px;
+}
+.hiddenText>ul>li{
+	padding:5px 5px;
+	border-bottom:1px solid rgba(255,255,255,.2);
+}
+.hiddenText>.row>*{
+	text-align:center;
+	border-right:1px solid rgba(255,255,255,.2);
+}
+.hiddenText>.row>:last-child{
+	border-right:none;
+}
+.hiddenText>.row{
+	margin-top:5px;
+}
+.expandableLi{
+	height:39px;
+	overflow:hidden;
+}
 
 $screen-phonei4: 320px !default;
 @media (min-width: $screen-phonei4) and (max-width: $screen-phone){
